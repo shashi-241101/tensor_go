@@ -23,6 +23,7 @@ const InvoiceModal = () => {
   // Set Initial State
   const [invoice, setInvoice] = useState({
     id: '',
+    googleId:'1234',
     createdAt: '',
     paymentDue: '',
     description: '',
@@ -264,6 +265,7 @@ const InvoiceModal = () => {
     Object.keys(invoice).forEach((key) => {
       if (
         key === 'id' ||
+        key === 'googleId' ||
         key === 'total' ||
         key === 'createdAt' ||
         key === 'paymentDue' ||

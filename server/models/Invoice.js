@@ -5,6 +5,9 @@ const InvoiceSchema = mongoose.Schema({
   id: {
     type: String,
   },
+  googleId:{
+    type:String
+  },
   createdAt: {
     type: String,
   },

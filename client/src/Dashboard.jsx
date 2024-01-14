@@ -7,6 +7,7 @@ import Invoices from './components/invoices/Invoices';
 import InvoiceState from './context/invoice/InvoiceState';
 import DarkState from './context/dark/DarkState';
 import { CSSTransition } from 'react-transition-group';
+import Footer from './components/Footer';
 import './Dashboard.scss';
 const Dashboard = () => {
   const [appearContent] = useState(true);
@@ -40,6 +41,7 @@ useEffect(() => {
          <Navbar />
          <Header />
          <Invoices />
+         <Footer/>
        </DarkState>
      </InvoiceState>
    </main>

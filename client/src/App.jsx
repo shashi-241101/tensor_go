@@ -12,8 +12,8 @@ function App() {
       <>
         <Topbar />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
+          {/* <Route path='/' element={<Home />} /> */}
+          <Route path='/' element={<Login />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='*' element={<Error />} />
         </Routes>

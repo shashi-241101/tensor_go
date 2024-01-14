@@ -26,7 +26,6 @@ app.use(express.json());
 //Define routes
 app.use('/api/invoices', require('./routes/invoices'));
 
-
 // setup session
 app.use(session({
     secret:"YOUR SECRET KEY",
@@ -100,22 +99,40 @@ app.get("/logout",(req,res,next)=>{
     })
 })
 
-app.listen(PORT,()=>{
-    console.log(`server start at port no ${PORT}`)
-})
 
-
-const triggerZapierAutomation = async (email, dueDate, invoiceNo, amount) => {
+app.post('/api/trigger', async (req, res) => {
+    try {
+      const jsonDataArray = req.body.data;
+  
+      // Assuming the JSON data array is an array of objects with the required fields
+      for (const jsonData of jsonDataArray) {
+        const { clientEmail, paymentDue, id, total, status, clientName,createdAt } = jsonData;
+    console.log(clientEmail, paymentDue, id, total, status, clientName,createdAt) ;
+        // Use the provided data to trigger the Zapier automation
+        triggerZapierAutomation(clientEmail, paymentDue, id, total, status, clientName,createdAt);
+      }
+  console.log("zapier Triggered successfully")
+      res.json({ msg: 'Data received and processed successfully' });
+    } catch (error) {
+      console.error('Error processing data:', error);
+      res.status(500).json({ msg: 'Server Error' });
+    }
+  });
+  
+const triggerZapierAutomation = async (clientEmail, paymentDue, id, total, status, clientName,createdAt) => {
     try {
       const zapierWebhookUrl = process.env.WEBHOOK_URL;
   
       // Use the provided data as the payload
       const payload = {
         data: {
-          email: email,
-          dueDate: dueDate,
-          invoiceNo: invoiceNo,
-          amount: amount 
+        clientEmail: clientEmail,
+        paymentDue: paymentDue,
+        id: id,
+        total:  total,
+        status: status,
+        clientName: clientName,
+        createdAt: createdAt
         }
       };
   
@@ -126,9 +143,10 @@ const triggerZapierAutomation = async (email, dueDate, invoiceNo, amount) => {
       console.error('Error triggering automation:', error);
     }
   };
-  
-  // Call this function with your specific data
-  triggerZapierAutomation('rrravipandey@gmail.com', '21-01-2024', '3465', 2000);
+  app.listen(PORT,()=>{
+    console.log(`server start at port no ${PORT}`)
+})
+
   
 
  

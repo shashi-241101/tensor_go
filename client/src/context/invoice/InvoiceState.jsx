@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState,useEffect} from 'react';
 import axios from 'axios';
 import InvoiceContext from './invoiceContext';
 import invoiceReducer from './invoiceReducer';
@@ -19,6 +19,7 @@ import {
   INVOICE_ERROR,
   GET_INVOICES,
 } from '../types';
+// import { use } from '../../../../server/routes/invoices';
 
 const InvoiceState = (props) => {
   // Set initial state
@@ -53,6 +54,20 @@ const InvoiceState = (props) => {
   };
 
   // Add Invoice
+  const [userdata, setUserdata] = useState({});
+    console.log("response", userdata)
+    const getUser = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/login/success", { withCredentials: true });
+
+            setUserdata(response.data.user)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+    useEffect(() => {
+      getUser()
+  }, [])
   const addInvoice = async (invoice, senderAddress, clientAddress, items) => {
     let tempId = '';
     for (let i = 0; i <= 1; i++) {
@@ -70,7 +85,8 @@ const InvoiceState = (props) => {
     invoice.clientAddress = clientAddress;
     invoice.items = items;
     invoice.total = tempTotal;
-
+    console.log(userdata?.googleId);
+    invoice.googleId=userdata?.googleId;
     const config = {
       headers: {
         'Content-Type': 'application/json',

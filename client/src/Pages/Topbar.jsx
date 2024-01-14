@@ -35,9 +35,9 @@ const Headers = () => {
                     <div className="right">
                         <ul>
                             <li>
-                                <NavLink to="/">
+                                {/* <NavLink to="/">
                                     Home
-                                </NavLink>
+                                </NavLink> */}
                             </li>
                             {
                                 Object?.keys(userdata)?.length > 0 ? (
@@ -54,7 +54,7 @@ const Headers = () => {
                                         </li>
                                     </>
                                 ) : <li>
-                                    <NavLink to="/login">
+                                    <NavLink to="/">
                                         Login
                                     </NavLink>
                                 </li>

@@ -19,9 +19,11 @@ router.get('/', async (req, res) => {
 // @route   POST api/invoices
 // @desc    Add an invoice
 // @access  Public
+
 router.post('/', async (req, res) => {
   const {
     id,
+    googleId,
     createdAt,
     paymentDue,
     description,
@@ -37,6 +39,7 @@ router.post('/', async (req, res) => {
   try {
     let newInvoice = new Invoice({
       id,
+      googleId,
       createdAt,
       paymentDue,
       description,

@@ -3,11 +3,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("./db/conn")
+const path = require('path');
 const PORT = 3001;
 const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
-const userdb = require("./model/userSchema")
+const userdb = require("./models/userSchema")
+
+const axios = require('axios');
 
 const clientid = process.env.CLIENT_ID;
 const clientsecret = process.env.CLIENT_SECRET;
@@ -19,6 +22,10 @@ app.use(cors({
     credentials:true
 }));
 app.use(express.json());
+
+//Define routes
+app.use('/api/invoices', require('./routes/invoices'));
+
 
 // setup session
 app.use(session({
@@ -96,3 +103,32 @@ app.get("/logout",(req,res,next)=>{
 app.listen(PORT,()=>{
     console.log(`server start at port no ${PORT}`)
 })
+
+
+const triggerZapierAutomation = async (email, dueDate, invoiceNo, amount) => {
+    try {
+      const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/17590743/3gytsg6/';
+  
+      // Use the provided data as the payload
+      const payload = {
+        data: {
+          email: email,
+          dueDate: dueDate,
+          invoiceNo: invoiceNo,
+          amount: amount 
+        }
+      };
+  
+      await axios.post(zapierWebhookUrl, payload);
+  
+      console.log('Automation trigger sent to Zapier successfully');
+    } catch (error) {
+      console.error('Error triggering automation:', error);
+    }
+  };
+  
+  // Call this function with your specific data
+  triggerZapierAutomation('rrravipandey@gmail.com', '21-01-2024', '3465', 2000);
+  
+
+ 

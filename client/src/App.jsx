@@ -1,16 +1,16 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Components/Home';
-import Headers from './Components/Headers';
-import Login from './Components/Login';
-import Dashboard from './Components/Dashboard';
-import Error from './Components/Error';
+import Home from './Pages/Home';
+import Topbar from './Pages/Topbar';
+import Login from './Pages/Login';
+import Dashboard from './Dashboard';
+import Error from './Pages/Error';
 
 function App() {
   return (
     <Router>
       <>
-        <Headers />
+        <Topbar />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />

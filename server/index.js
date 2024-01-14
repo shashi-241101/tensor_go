@@ -107,7 +107,7 @@ app.listen(PORT,()=>{
 
 const triggerZapierAutomation = async (email, dueDate, invoiceNo, amount) => {
     try {
-      const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/17590743/3gytsg6/';
+      const zapierWebhookUrl = process.env.WEBHOOK_URL;
   
       // Use the provided data as the payload
       const payload = {
